@@ -117,7 +117,7 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 erp-autopecas-sige/
 ├── docs/
 │   ├── artigo/       # Texto do TCC/artigo (introdução, referencial teórico, metodologia etc.)
-│   │   └── TI_SIGE.docx
+│   │   └── TI_SIGE.pdf
 │   └── diagramas/    # Diagramas UML, BPMN e casos de uso
 ├── src/              # Código-fonte da aplicação
 ├── tests/            # Testes automatizados
@@ -130,7 +130,7 @@ erp-autopecas-sige/
 
 ## 📚 Documentação Completa
 
-O texto completo do trabalho acadêmico (introdução, referencial teórico, metodologia, requisitos, desenvolvimento e resultados) está disponível em [`docs/artigo/TI_SIGE.docx`](docs/artigo/TI_SIGE.docx).
+O texto completo do trabalho acadêmico (introdução, referencial teórico, metodologia, requisitos, desenvolvimento e resultados) está disponível em [`docs/artigo/TI_SIGE.pdf`](docs/artigo/TI_SIGE.pdf).
 
 Diagramas UML, BPMN e casos de uso ficam em [`docs/diagramas/`](docs/diagramas/).
 
