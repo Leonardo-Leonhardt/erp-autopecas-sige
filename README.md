@@ -12,7 +12,10 @@
 - [Tecnologias Utilizadas](#️-tecnologias-utilizadas)
 - [Como Executar o Projeto](#-como-executar-o-projeto)
 - [Estrutura do Repositório](#-estrutura-do-repositório)
+- [Documentação Completa](#-documentação-completa)
+- [Capturas de Tela](#-capturas-de-tela)
 - [Status do Projeto](#-status-do-projeto)
+- [Professor Orientador](#-professor-orientador)
 - [Integrantes da Equipe](#-integrantes-da-equipe)
 - [Licença](#-licença)
 
@@ -112,13 +115,34 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ```
 erp-autopecas-sige/
-├── src/            # Código-fonte da aplicação
-├── docs/           # Documentação, diagramas BPMN e artefatos acadêmicos
-├── tests/          # Testes automatizados
+├── docs/
+│   ├── artigo/       # Texto do TCC/artigo (introdução, referencial teórico, metodologia etc.)
+│   │   └── TI_SIGE.docx
+│   └── diagramas/    # Diagramas UML, BPMN e casos de uso
+├── src/              # Código-fonte da aplicação
+├── tests/            # Testes automatizados
 └── README.md
 ```
 
 > Ajuste esta árvore conforme a organização real das pastas do projeto.
+
+---
+
+## 📚 Documentação Completa
+
+O texto completo do trabalho acadêmico (introdução, referencial teórico, metodologia, requisitos, desenvolvimento e resultados) está disponível em [`docs/artigo/TI_SIGE.docx`](docs/artigo/TI_SIGE.docx).
+
+Diagramas UML, BPMN e casos de uso ficam em [`docs/diagramas/`](docs/diagramas/).
+
+---
+
+## 📸 Capturas de Tela
+
+*(Adicionar aqui prints das principais telas do sistema assim que estiverem disponíveis: tela de login, dashboard de estoque, tela de vendas etc.)*
+
+| Tela de Login | Dashboard de Estoque | Tela de Vendas |
+|---|---|---|
+| ![Login](docs/imagens/login.png) | ![Dashboard](docs/imagens/dashboard.png) | ![Vendas](docs/imagens/vendas.png) |
 
 ---
 
@@ -128,10 +152,22 @@ erp-autopecas-sige/
 
 ---
 
+## 🧑‍🏫 Professor Orientador
+
+- Paulo Augusto Isnard Santos
+
+---
+
 ## 👥 Integrantes da Equipe
 
-- Nome do Aluno 1
-- Nome do Aluno 2
+- Arthur Vinícius Reis Rodrigues
+- Emanuela Vitória Magalhães Alves
+- Fantine de Fatima Bonfim
+- Giovanna Ribeiro Santos
+- Kayk da Silva Souza
+- Leonardo Leonhardt Bispo
+- Rodrigo Fernandes Ribeiro Pinto
+- Yanne Assis Alves
 
 ---
 
