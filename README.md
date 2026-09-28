@@ -4,7 +4,7 @@
 
 ---
 
-## 📑 Sumário
+## Sumário
 
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Objetivos do Sistema](#objetivos-do-sistema)
