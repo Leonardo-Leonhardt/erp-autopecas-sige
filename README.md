@@ -13,7 +13,7 @@
 - [Como Executar o Projeto](#-como-executar-o-projeto)
 - [Estrutura do Repositório](#-estrutura-do-repositório)
 - [Documentação Completa](#-documentação-completa)
-- [Protótipos de Tela](#-prototipos-de-tela)
+- [Protótipos de Tela](#-protótipos-de-tela)
 - [Status do Projeto](#-status-do-projeto)
 - [Professor Orientador](#-professor-orientador)
 - [Integrantes da Equipe](#-integrantes-da-equipe)
@@ -127,13 +127,23 @@ Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagrama
 
 ## 📸 Protótipos de Tela
 
+| Contatos | Dashboard |
+|---|---|
+| ![Contatos](docs/imagens/Contatos.jpg) | ![Dashboard](docs/imagens/Dashboard.jpg) |
 
-| Tela de Login | Dashboard de Estoque | Tela de Vendas |
-|---|---|---|
-| ![Contatos](docs/imagens/Contatos.jpg) | ![Dashboard](docs/imagens/Dashboard.jpg) 
-| ![FAQ](docs/imagens/FAQ.jpg) | ![Financeiro](docs/imagens/Financeiro.jpg) |
-| ![Movimentações](docs/imagens/Movimentações.jpg) | ![Produtos](docs/imagens/Produtos.jpg) 
-| ![Vendas](docs/imagens/Vendas.jpg) |
+| FAQ | Financeiro |
+|---|---|
+![FAQ](docs/imagens/FAQ.jpg) | ![Financeiro](docs/imagens/Financeiro.jpg) |
+
+| Movimentações | Produtos |
+|---|---|
+| ![Movimentações](docs/imagens/Movimentações.jpg) | ![Produtos](docs/imagens/Produtos.jpg) |
+
+| Vendas |  |
+|---|---|
+| ![Vendas](docs/imagens/Vendas.jpg) | |
+
+
 
 ---
 
