@@ -127,18 +127,13 @@ Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagrama
 
 ## 📸 Protótipos de Tela
 
-| Dashboard | Estoque |
-|---|---|
-| ![Dashboard](docs/imagens/Dashboard.png) | ![Estoque](docs/imagens/Estoque.png) |
+| Dashboard | Estoque | Produto |
+|---|---|---|
+| ![Dashboard](docs/imagens/Dashboard.png) | ![Estoque](docs/imagens/Estoque.png) | ![Produto](docs/imagens/Produto.png) |
 
-| Produto | Reposição |
+| Reposição | Vendas |
 |---|---|
-![Produto](docs/imagens/Produto.png) | ![Reposição](docs/imagens/Reposição.png) |
-
-| Vendas |  |
-|---|---|
-| ![Vendas](docs/imagens/Vendas.png) |  |
-
+| ![Reposição](docs/imagens/Reposição.png) | ![Vendas](docs/imagens/Vendas.png) | 
 
 ---
 
