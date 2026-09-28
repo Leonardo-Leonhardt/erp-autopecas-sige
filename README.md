@@ -6,22 +6,22 @@
 
 ## 📑 Sumário
 
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Objetivos do Sistema](#-objetivos-do-sistema)
-- [Processos de Negócio Cobertos](#️-processos-de-negócio-cobertos-bpmn--visão-erp)
-- [Tecnologias Utilizadas](#️-tecnologias-utilizadas)
-- [Como Executar o Projeto](#-como-executar-o-projeto)
-- [Estrutura do Repositório](#-estrutura-do-repositório)
-- [Documentação Completa](#-documentação-completa)
-- [Protótipos de Tela](#-protótipos-de-tela)
-- [Status do Projeto](#-status-do-projeto)
-- [Professor Orientador](#-professor-orientador)
-- [Integrantes da Equipe](#-integrantes-da-equipe)
-- [Licença](#-licença)
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Objetivos do Sistema](#objetivos-do-sistema)
+- [Processos de Negócio Cobertos](#processos-de-negócio-cobertos-bpmn--visão-erp)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Como Executar o Projeto](#como-executar-o-projeto)
+- [Estrutura do Repositório](#estrutura-do-repositório)
+- [Documentação](#documentação)
+- [Protótipos de Tela](#protótipos-de-tela)
+- [Status do Projeto](#status-do-projeto)
+- [Professor Orientador](#professor-orientador)
+- [Integrantes da Equipe](#integrantes-da-equipe)
+- [Licença](#licença)
 
 ---
 
-## 📌 Sobre o Projeto
+## Sobre o Projeto
 
 O setor de varejo de autopeças lida com alta diversidade de itens e rápida obsolescência, o que torna o controle manual ou descentralizado (planilhas isoladas, controle em papel etc.) altamente propenso a divergências entre o estoque físico e o saldo registrado no sistema.
 
@@ -34,7 +34,7 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ---
 
-## 🎯 Objetivos do Sistema
+## Objetivos do Sistema
 
 - **Integração Vendas ↔ Estoque** — baixa e reserva automática de peças no fechamento de pedidos de venda, eliminando a atualização manual do saldo.
 - **Centralização de Dados** — substituição de planilhas isoladas por uma base única, garantindo visão unificada das operações.
@@ -42,7 +42,7 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ---
 
-## ⚙️ Processos de Negócio Cobertos (BPMN / Visão ERP)
+## Processos de Negócio Cobertos (BPMN / Visão ERP)
 
 | Processo | Descrição |
 |---|---|
@@ -52,7 +52,7 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 | Camada | Tecnologia |
 |---|---|
@@ -63,12 +63,12 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ---
 
-## 🚀 Como Executar o Projeto
+## Como Executar o Projeto
 
 ### Pré-requisitos
 
 - [Git](https://git-scm.com/)
-- SDK .Net
+- [.NET SDK](https://dotnet.microsoft.com/download)
 
 ### Passo a passo
 
@@ -101,14 +101,14 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 ---
 
-## 📂 Estrutura do Repositório
+## Estrutura do Repositório
 
 ```
 erp-autopecas-sige/
 ├── docs/
-│   ├── artigo/       # Texto do TCC/artigo (introdução, referencial teórico, metodologia etc.)
-│   │   └── TI_SIGE.pdf
-│   └── diagramas/    # Diagramas UML, BPMN e casos de uso
+│   ├── artigo/       # Texto do artigo
+│   │   └── TI Sistemas Integrados de Gestão Empresarial.pdf
+│   └── diagramas/    # Diagramas UML, BPMN e casos de uso [a fazer]
 │   └── imagens/      # Imagens do projeto
 ├── src/              # Código-fonte da aplicação
 ├── tests/            # Testes automatizados
@@ -117,15 +117,15 @@ erp-autopecas-sige/
 
 ---
 
-## 📚 Documentação Completa
+## Documentação
 
-O texto completo do trabalho acadêmico estará disponível em [`docs/artigo/TI_SIGE.pdf`](docs/artigo/TI_SIGE.pdf).
+O texto do trabalho acadêmico estará disponível em [`docs/artigo/TI_SIGE.pdf`](docs/artigo/TI_SIGE.pdf).
 
-Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagramas/). [A fazer]
+Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagramas/). [a fazer]
 
 ---
 
-## 📸 Protótipos de Tela
+## Protótipos de Tela
 
 | Dashboard | Estoque | Produto |
 |---|---|---|
@@ -137,19 +137,19 @@ Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagrama
 
 ---
 
-## 📈 Status do Projeto
+## Status do Projeto
 
-🚧 Em desenvolvimento — projeto acadêmico em andamento.
+Em desenvolvimento.
 
 ---
 
-## 🧑‍🏫 Professor Orientador
+## Professor Orientador
 
 - Paulo Augusto Isnard Santos
 
 ---
 
-## 👥 Integrantes da Equipe
+## Integrantes da Equipe
 
 - Arthur Vinícius Reis Rodrigues
 - Emanuela Vitória Magalhães Alves
@@ -162,6 +162,6 @@ Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagrama
 
 ---
 
-## 📄 Licença
+## Licença
 
 *Uso exclusivo acadêmico*
