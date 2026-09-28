@@ -13,7 +13,7 @@
 - [Como Executar o Projeto](#-como-executar-o-projeto)
 - [Estrutura do Repositório](#-estrutura-do-repositório)
 - [Documentação Completa](#-documentação-completa)
-- [Capturas de Tela](#-capturas-de-tela)
+- [Protótipos de Tela](#-prototipos-de-tela)
 - [Status do Projeto](#-status-do-projeto)
 - [Professor Orientador](#-professor-orientador)
 - [Integrantes da Equipe](#-integrantes-da-equipe)
@@ -56,12 +56,10 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 | Camada | Tecnologia |
 |---|---|
-| **Backend** | *(ex.: C# / .NET, Java / Spring, Node.js)* |
-| **Frontend** | *(ex.: React, Blazor, HTML/CSS/JS)* |
-| **Banco de Dados** | *(ex.: PostgreSQL, SQLite, MySQL)* |
+| **Backend** | *.Net / C#* |
+| **Frontend** | *HTML/CSS/JS* |
+| **Banco de Dados** | *MySQL* |
 | **Modelagem de Processos** | Camunda / Bizagi (BPMN) |
-
-> Atualize esta tabela conforme o stack definitivo do projeto for definido.
 
 ---
 
@@ -70,8 +68,7 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 ### Pré-requisitos
 
 - [Git](https://git-scm.com/)
-- *(SDK/ambiente de execução correspondente ao backend escolhido)*
-- *(Instância do banco de dados escolhido, se aplicável)*
+- SDK .Net
 
 ### Passo a passo
 
@@ -87,26 +84,19 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
 
 3. Restaure as dependências:
    ```bash
-   # exemplo — ajustar de acordo com o stack utilizado
    dotnet restore
-   # ou
-   npm install
    ```
 
 4. Configure as variáveis de ambiente / string de conexão do banco de dados (`.env` ou `appsettings.json`).
 
 5. Execute as migrations do banco de dados:
    ```bash
-   # exemplo
    dotnet ef database update
    ```
 
 6. Inicie a aplicação:
    ```bash
-   # exemplo
    dotnet run
-   # ou
-   npm start
    ```
 
 ---
@@ -119,30 +109,31 @@ erp-autopecas-sige/
 │   ├── artigo/       # Texto do TCC/artigo (introdução, referencial teórico, metodologia etc.)
 │   │   └── TI_SIGE.pdf
 │   └── diagramas/    # Diagramas UML, BPMN e casos de uso
+│   └── imagens/      # Imagens do projeto
 ├── src/              # Código-fonte da aplicação
 ├── tests/            # Testes automatizados
 └── README.md
 ```
 
-> Ajuste esta árvore conforme a organização real das pastas do projeto.
-
 ---
 
 ## 📚 Documentação Completa
 
-O texto completo do trabalho acadêmico (introdução, referencial teórico, metodologia, requisitos, desenvolvimento e resultados) está disponível em [`docs/artigo/TI_SIGE.pdf`](docs/artigo/TI_SIGE.pdf).
+O texto completo do trabalho acadêmico estará disponível em [`docs/artigo/TI_SIGE.pdf`](docs/artigo/TI_SIGE.pdf).
 
-Diagramas UML, BPMN e casos de uso ficam em [`docs/diagramas/`](docs/diagramas/).
+Diagramas UML, BPMN e casos de uso ficarão em [`docs/diagramas/`](docs/diagramas/). [A fazer]
 
 ---
 
-## 📸 Capturas de Tela
+## 📸 Protótipos de Tela
 
-*(Adicionar aqui prints das principais telas do sistema assim que estiverem disponíveis: tela de login, dashboard de estoque, tela de vendas etc.)*
 
 | Tela de Login | Dashboard de Estoque | Tela de Vendas |
 |---|---|---|
-| ![Login](docs/imagens/login.png) | ![Dashboard](docs/imagens/dashboard.png) | ![Vendas](docs/imagens/vendas.png) |
+| ![Contatos](docs/imagens/Contatos.jpg) | ![Dashboard](docs/imagens/Dashboard.jpg) 
+| ![FAQ](docs/imagens/FAQ.jpg) | ![Financeiro](docs/imagens/Financeiro.jpg) |
+| ![Movimentações](docs/imagens/Movimentações.jpg) | ![Produtos](docs/imagens/Produtos.jpg) 
+| ![Vendas](docs/imagens/Vendas.jpg) |
 
 ---
 
@@ -173,4 +164,4 @@ Diagramas UML, BPMN e casos de uso ficam em [`docs/diagramas/`](docs/diagramas/)
 
 ## 📄 Licença
 
-*(Definir a licença do projeto, ex.: MIT, ou indicar que é de uso exclusivamente acadêmico.)*
+*Uso exclusivo acadêmico*
