@@ -77,27 +77,29 @@ Este projeto propõe uma aplicação de gestão empresarial com foco na **integr
    git clone https://github.com/Leonardo-Leonhardt/erp-autopecas-sige.git
    ```
 
-2. Acesse a pasta do projeto:
+2. Acesse a pasta da aplicação:
    ```bash
-   cd erp-autopecas-sige
+   cd erp-autopecas-sige/src/AutoPecas.Api
    ```
 
-3. Restaure as dependências:
-   ```bash
-   dotnet restore
-   ```
-
-4. Configure as variáveis de ambiente / string de conexão do banco de dados (`.env` ou `appsettings.json`).
-
-5. Execute as migrations do banco de dados:
-   ```bash
-   dotnet ef database update
-   ```
-
-6. Inicie a aplicação:
+3. Inicie a aplicação (o `dotnet run` já restaura as dependências):
    ```bash
    dotnet run
    ```
+
+4. Abra **http://localhost:5080** no navegador.
+
+Sem configuração, a aplicação usa um **banco em memória** com dados de demonstração (catálogo do protótipo e ~90 dias de histórico de vendas). Os dados são recriados a cada execução.
+
+Para usar o **MySQL**, informe a string de conexão em `src/AutoPecas.Api/appsettings.json` (ou na variável de ambiente `ConnectionStrings__MySql`):
+
+```json
+"ConnectionStrings": {
+  "MySql": "Server=localhost;Database=autopecas;User=root;Password=suasenha;"
+}
+```
+
+As tabelas são criadas automaticamente na primeira execução (`EnsureCreated`) e os dados de demonstração só são inseridos se o banco estiver vazio.
 
 ---
 
@@ -110,7 +112,10 @@ erp-autopecas-sige/
 │   │   └── TI Sistemas Integrados de Gestão Empresarial.pdf
 │   └── diagramas/    # Diagramas UML, BPMN e casos de uso [a fazer]
 │   └── imagens/      # Imagens do projeto
-├── src/              # Código-fonte da aplicação
+├── prototipo/
+│   └── prototipo-estoque-autopecas.html  # Protótipo estático original das telas
+├── src/
+│   └── AutoPecas.Api/    # Aplicação (.NET 8 Minimal API + frontend em wwwroot/)
 ├── tests/            # Testes automatizados
 └── README.md
 ```
