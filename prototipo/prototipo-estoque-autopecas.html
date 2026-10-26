@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Protótipo — Estoque Integrado a Vendas (Autopeças)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7; --surface:#ffffff; --border:#e3e6ea; --text:#1b1f24; --muted:#6b7380;
+    --primary:#1f4fd1; --primary-soft:#e8eefc; --dark:#14181f;
+    --ok:#1f8a4c; --ok-soft:#e5f5ec; --warn:#b76e00; --warn-soft:#fdf2df;
+    --danger:#c43131; --danger-soft:#fbe7e7; --info:#5b3fc4; --info-soft:#efeafd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:#d9dde3;color:var(--text);font-size:14px;padding:48px;display:flex;flex-direction:column;gap:64px;align-items:center}
+  .label{font-size:22px;font-weight:700;color:#3a4150;width:1440px;margin-bottom:-48px}
+  .label span{font-weight:400;color:#6b7380;font-size:15px;margin-left:10px}
+  .frame{width:1440px;height:960px;background:var(--bg);display:flex;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+  /* sidebar */
+  .side{width:240px;background:var(--dark);color:#c9ced8;padding:24px 16px;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:16px;padding:0 8px 24px}
+  .logo{width:32px;height:32px;border-radius:8px;background:var(--primary);display:grid;place-items:center;font-size:14px}
+  .nav{padding:10px 12px;border-radius:8px;display:flex;align-items:center;gap:10px;font-weight:500}
+  .nav.active{background:#253047;color:#fff}
+  .ico{width:16px;height:16px;border-radius:4px;border:2px solid currentColor;opacity:.8}
+  .side .foot{margin-top:auto;padding:12px;border-top:1px solid #2a3140;display:flex;gap:10px;align-items:center}
+  .avatar{width:32px;height:32px;border-radius:50%;background:#3a4a6b;display:grid;place-items:center;color:#fff;font-weight:600;font-size:12px}
+  /* main */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .top{height:68px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 32px;gap:16px}
+  .top h1{font-size:20px;font-weight:700}
+  .crumb{color:var(--muted);font-size:13px}
+  .spacer{flex:1}
+  .search{width:320px;height:38px;border:1px solid var(--border);border-radius:8px;padding:0 12px;display:flex;align-items:center;color:var(--muted);background:#fafbfc}
+  .btn{height:38px;padding:0 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-weight:600;display:inline-flex;align-items:center;gap:8px;font-size:13px}
+  .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .content{padding:28px 32px;display:flex;flex-direction:column;gap:20px;flex:1;overflow:hidden}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .card h3{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .card h3 .sub{font-weight:400;color:var(--muted);font-size:13px;margin-left:auto}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .kpi .v{font-size:28px;font-weight:700;margin:6px 0 4px}
+  .kpi .l{color:var(--muted);font-size:13px}
+  .kpi .d{font-size:12px;font-weight:600}
+  .up{color:var(--ok)} .down{color:var(--danger)}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;padding:10px 12px;border-bottom:1px solid var(--border);background:#fafbfc}
+  td{padding:12px;border-bottom:1px solid var(--border);font-size:13px}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#3a4150}
+  .tag{display:inline-block;white-space:nowrap;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .t-ok{background:var(--ok-soft);color:var(--ok)} .t-warn{background:var(--warn-soft);color:var(--warn)}
+  .t-danger{background:var(--danger-soft);color:var(--danger)} .t-info{background:var(--info-soft);color:var(--info)}
+  .t-blue{background:var(--primary-soft);color:var(--primary)}
+  .row{display:flex;gap:20px}
+  .muted{color:var(--muted)}
+  .chips{display:flex;gap:8px}
+  .chip{padding:7px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:13px;font-weight:500}
+  .chip.on{background:var(--primary-soft);border-color:#bccbf5;color:var(--primary)}
+  .bars{display:flex;align-items:stretch;gap:14px;height:180px;padding-top:10px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .bar i{display:block;width:100%;background:var(--primary);border-radius:6px 6px 0 0}
+  .alert{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+  .alert:last-child{border-bottom:0}
+  .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:12px;font-weight:600;color:var(--muted)}
+  .input{height:40px;border:1px solid var(--border);border-radius:8px;padding:0 12px;display:flex;align-items:center;background:#fff}
+  .qty{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  .qty span{padding:4px 10px}
+  .qty span:nth-child(2){border-left:1px solid var(--border);border-right:1px solid var(--border);font-weight:600}
+  .total{display:flex;justify-content:space-between;padding:8px 0}
+  .total.big{font-size:22px;font-weight:700;border-top:1px solid var(--border);padding-top:14px;margin-top:6px}
+  .impact{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+  .arrow{color:var(--muted)}
+  .timeline{display:flex;flex-direction:column}
+  .tl{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);align-items:center}
+  .tl .q{width:70px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .progress{height:8px;background:#eceff3;border-radius:99px;overflow:hidden;width:80px}
+  .progress i{display:block;height:100%}
+  .banner{display:flex;gap:12px;align-items:center;background:var(--ok-soft);border:1px solid #bfe5cf;color:#155f35;border-radius:10px;padding:12px 16px;font-weight:500}
+  .check{width:18px;height:18px;border:2px solid #b7bec9;border-radius:4px;display:inline-block;vertical-align:middle}
+  .check.on{background:var(--primary);border-color:var(--primary)}
+</style>
+</head>
+<body>
+
+<!-- ================= TELA 1 — DASHBOARD ================= -->
+<div class="label">01 · Dashboard <span>visão unificada de vendas e estoque</span></div>
+<div class="frame">
+  <aside class="side">
+    <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+    <div class="nav active"><i class="ico"></i>Dashboard</div>
+    <div class="nav"><i class="ico"></i>Nova venda</div>
+    <div class="nav"><i class="ico"></i>Estoque</div>
+    <div class="nav"><i class="ico"></i>Movimentações</div>
+    <div class="nav"><i class="ico"></i>Reposição</div>
+    <div class="nav"><i class="ico"></i>Fornecedores</div>
+    <div class="nav"><i class="ico"></i>Relatórios</div>
+    <div class="foot"><div class="avatar">RG</div><div><div style="color:#fff;font-weight:600">Roberto G.</div><div style="font-size:12px">Gestor</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="top"><h1>Dashboard</h1><span class="crumb">Hoje, 28 set 2026</span><div class="spacer"></div><div class="search">Buscar peça, código ou aplicação…</div><div class="btn primary">+ Nova venda</div></div>
+    <div class="content">
+      <div class="grid4">
+        <div class="card kpi"><div class="l">Vendas hoje</div><div class="v">R$ 8.742</div><div class="d up">▲ 12% vs. ontem · 37 vendas</div></div>
+        <div class="card kpi"><div class="l">Valor em estoque</div><div class="v">R$ 412.380</div><div class="d muted">3.214 SKUs ativos</div></div>
+        <div class="card kpi"><div class="l">Itens em ruptura</div><div class="v" style="color:var(--danger)">14</div><div class="d down">▲ 3 desde segunda</div></div>
+        <div class="card kpi"><div class="l">Capital parado (&gt;180 dias)</div><div class="v" style="color:var(--warn)">R$ 38.950</div><div class="d muted">212 itens sem giro</div></div>
+      </div>
+      <div class="row" style="flex:1;min-height:0">
+        <div class="card" style="flex:1.6">
+          <h3>Vendas × baixas de estoque <span class="sub">últimos 7 dias</span></h3>
+          <div class="bars">
+            <div class="bar"><i style="height:55%"></i>Seg</div><div class="bar"><i style="height:72%"></i>Ter</div>
+            <div class="bar"><i style="height:48%"></i>Qua</div><div class="bar"><i style="height:80%"></i>Qui</div>
+            <div class="bar"><i style="height:92%"></i>Sex</div><div class="bar"><i style="height:66%"></i>Sáb</div>
+            <div class="bar"><i style="height:70%;background:#8aa6ea"></i>Hoje</div>
+          </div>
+          <h3 style="margin-top:24px">Últimas vendas <span class="sub">estoque baixado automaticamente</span></h3>
+          <table>
+            <tr><th>Venda</th><th>Cliente</th><th>Itens</th><th class="num">Total</th><th>Estoque</th></tr>
+            <tr><td class="mono">#10482</td><td>Oficina Mecânica do Zé</td><td>Pastilha de freio, Disco dianteiro ×2</td><td class="num">R$ 689,00</td><td><span class="tag t-ok">Baixado</span></td></tr>
+            <tr><td class="mono">#10481</td><td>Consumidor final</td><td>Filtro de óleo PSL 55</td><td class="num">R$ 32,90</td><td><span class="tag t-ok">Baixado</span></td></tr>
+            <tr><td class="mono">#10480</td><td>Auto Center Savassi</td><td>Amortecedor tras. Onix ×2</td><td class="num">R$ 1.180,00</td><td><span class="tag t-warn">Abaixo do mín.</span></td></tr>
+          </table>
+        </div>
+        <div class="card" style="flex:1">
+          <h3>Alertas de estoque <span class="sub">14 críticos</span></h3>
+          <div class="alert"><span class="dot" style="background:var(--danger)"></span><div style="flex:1"><b>Correia dentada Gates 5463XS</b><div class="muted">Saldo 0 · mínimo 4 · 6 vendas perdidas no mês</div></div><span class="tag t-danger">Ruptura</span></div>
+          <div class="alert"><span class="dot" style="background:var(--danger)"></span><div style="flex:1"><b>Vela NGK BKR6E</b><div class="muted">Saldo 0 · mínimo 20</div></div><span class="tag t-danger">Ruptura</span></div>
+          <div class="alert"><span class="dot" style="background:var(--warn)"></span><div style="flex:1"><b>Amortecedor tras. Onix 1.0</b><div class="muted">Saldo 2 · mínimo 6</div></div><span class="tag t-warn">Repor</span></div>
+          <div class="alert"><span class="dot" style="background:var(--warn)"></span><div style="flex:1"><b>Pastilha Cobreq N-1052</b><div class="muted">Saldo 3 · mínimo 8</div></div><span class="tag t-warn">Repor</span></div>
+          <div class="alert"><span class="dot" style="background:var(--info)"></span><div style="flex:1"><b>Farol Gol G4 (lado esq.)</b><div class="muted">Sem venda há 240 dias · 9 un. paradas</div></div><span class="tag t-info">Excesso</span></div>
+          <div class="btn" style="margin-top:12px;width:100%;justify-content:center">Gerar sugestão de compra</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ================= TELA 2 — NOVA VENDA (PDV) ================= -->
+<div class="label">02 · Nova venda (PDV) <span>a venda mostra o impacto no estoque antes de finalizar</span></div>
+<div class="frame">
+  <aside class="side">
+    <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+    <div class="nav"><i class="ico"></i>Dashboard</div>
+    <div class="nav active"><i class="ico"></i>Nova venda</div>
+    <div class="nav"><i class="ico"></i>Estoque</div>
+    <div class="nav"><i class="ico"></i>Movimentações</div>
+    <div class="nav"><i class="ico"></i>Reposição</div>
+    <div class="nav"><i class="ico"></i>Fornecedores</div>
+    <div class="nav"><i class="ico"></i>Relatórios</div>
+    <div class="foot"><div class="avatar">JS</div><div><div style="color:#fff;font-weight:600">Juliana S.</div><div style="font-size:12px">Vendedora</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="top"><h1>Nova venda</h1><span class="crumb">Venda #10483 · rascunho</span><div class="spacer"></div><div class="btn">Salvar orçamento</div></div>
+    <div class="content" style="flex-direction:row">
+      <div style="flex:1.7;display:flex;flex-direction:column;gap:20px">
+        <div class="card">
+          <h3>Buscar peça</h3>
+          <div class="row" style="gap:12px">
+            <div class="field" style="flex:2"><label>Código, descrição ou código original</label><div class="input">pastilha freio onix</div></div>
+            <div class="field" style="flex:1"><label>Veículo</label><div class="input">Chevrolet Onix 1.0 2019</div></div>
+          </div>
+          <table style="margin-top:14px">
+            <tr><th>Código</th><th>Descrição</th><th>Marca</th><th class="num">Saldo</th><th class="num">Preço</th><th></th></tr>
+            <tr><td class="mono">FR-1052</td><td>Pastilha de freio dianteira</td><td>Cobreq</td><td class="num">3</td><td class="num">R$ 119,90</td><td><span class="btn" style="height:30px">Adicionar</span></td></tr>
+            <tr><td class="mono">FR-2210</td><td>Pastilha de freio dianteira cerâmica</td><td>Fras-le</td><td class="num">11</td><td class="num">R$ 164,00</td><td><span class="btn" style="height:30px">Adicionar</span></td></tr>
+            <tr style="opacity:.5"><td class="mono">FR-3307</td><td>Pastilha de freio dianteira</td><td>Bosch</td><td class="num">0</td><td class="num">R$ 139,50</td><td><span class="tag t-danger">Sem estoque</span></td></tr>
+          </table>
+        </div>
+        <div class="card" style="flex:1">
+          <h3>Itens da venda <span class="sub">3 itens</span></h3>
+          <table>
+            <tr><th>Peça</th><th>Qtd.</th><th class="num">Unit.</th><th class="num">Subtotal</th><th>Estoque após venda</th></tr>
+            <tr><td><b>Pastilha dianteira Cobreq</b><div class="muted mono">FR-1052</div></td><td><span class="qty"><span>−</span><span>1</span><span>+</span></span></td><td class="num">R$ 119,90</td><td class="num">R$ 119,90</td><td><span class="impact">3 <span class="arrow">→</span> <b>2</b> <span class="tag t-warn">abaixo do mín. (8)</span></span></td></tr>
+            <tr><td><b>Disco de freio ventilado</b><div class="muted mono">DF-4471</div></td><td><span class="qty"><span>−</span><span>2</span><span>+</span></span></td><td class="num">R$ 189,00</td><td class="num">R$ 378,00</td><td><span class="impact">14 <span class="arrow">→</span> <b>12</b> <span class="tag t-ok">ok</span></span></td></tr>
+            <tr><td><b>Fluido de freio DOT 4 500ml</b><div class="muted mono">FL-0090</div></td><td><span class="qty"><span>−</span><span>1</span><span>+</span></span></td><td class="num">R$ 29,90</td><td class="num">R$ 29,90</td><td><span class="impact">40 <span class="arrow">→</span> <b>39</b> <span class="tag t-ok">ok</span></span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+        <div class="card">
+          <h3>Cliente</h3>
+          <div class="field"><label>Cliente</label><div class="input">Oficina Mecânica do Zé · CNPJ 12.345.678/0001-90</div></div>
+          <div class="field" style="margin-top:12px"><label>Forma de pagamento</label>
+            <div class="chips"><span class="chip">Dinheiro</span><span class="chip on">PIX</span><span class="chip">Cartão</span><span class="chip">A prazo</span></div></div>
+        </div>
+        <div class="card">
+          <h3>Resumo</h3>
+          <div class="total"><span class="muted">Subtotal</span><span>R$ 527,80</span></div>
+          <div class="total"><span class="muted">Desconto (oficina parceira 5%)</span><span>− R$ 26,39</span></div>
+          <div class="total big"><span>Total</span><span>R$ 501,41</span></div>
+        </div>
+        <div class="card" style="background:var(--warn-soft);border-color:#f1d9ac">
+          <h3 style="color:var(--warn)">⚠ Impacto no estoque</h3>
+          <p style="line-height:1.5">Ao finalizar, <b>4 unidades</b> serão baixadas automaticamente. A pastilha <b>FR-1052</b> ficará abaixo do estoque mínimo e entrará na sugestão de compra.</p>
+        </div>
+        <div class="btn ok" style="height:52px;justify-content:center;font-size:15px">Finalizar venda e baixar estoque</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ================= TELA 3 — ESTOQUE ================= -->
+<div class="label">03 · Estoque <span>catálogo de peças com saldo em tempo real</span></div>
+<div class="frame">
+  <aside class="side">
+    <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+    <div class="nav"><i class="ico"></i>Dashboard</div>
+    <div class="nav"><i class="ico"></i>Nova venda</div>
+    <div class="nav active"><i class="ico"></i>Estoque</div>
+    <div class="nav"><i class="ico"></i>Movimentações</div>
+    <div class="nav"><i class="ico"></i>Reposição</div>
+    <div class="nav"><i class="ico"></i>Fornecedores</div>
+    <div class="nav"><i class="ico"></i>Relatórios</div>
+    <div class="foot"><div class="avatar">RG</div><div><div style="color:#fff;font-weight:600">Roberto G.</div><div style="font-size:12px">Gestor</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="top"><h1>Estoque</h1><span class="crumb">3.214 peças cadastradas</span><div class="spacer"></div><div class="btn">Entrada de nota (NF-e)</div><div class="btn">Inventário</div><div class="btn primary">+ Nova peça</div></div>
+    <div class="content">
+      <div class="row" style="align-items:center">
+        <div class="search" style="width:380px">Buscar por código, descrição, marca ou veículo…</div>
+        <div class="chips"><span class="chip on">Todos</span><span class="chip">Ruptura (14)</span><span class="chip">Abaixo do mínimo (38)</span><span class="chip">Sem giro (212)</span></div>
+        <div class="spacer"></div>
+        <div class="chips"><span class="chip">Categoria: Freios ▾</span><span class="chip">Marca ▾</span><span class="chip">Montadora ▾</span></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;flex:1">
+        <table>
+          <tr><th>Código</th><th>Descrição</th><th>Aplicação</th><th>Marca</th><th>Local</th><th class="num">Saldo</th><th class="num">Mín.</th><th class="num">Custo méd.</th><th class="num">Preço</th><th>Última venda</th><th>Status</th></tr>
+          <tr><td class="mono">FR-1052</td><td>Pastilha de freio dianteira</td><td>Onix, Prisma 2013–22</td><td>Cobreq</td><td class="mono">A-03-2</td><td class="num">3</td><td class="num">8</td><td class="num">R$ 62,40</td><td class="num">R$ 119,90</td><td>hoje</td><td><span class="tag t-warn">Abaixo do mín.</span></td></tr>
+          <tr><td class="mono">CD-5463</td><td>Correia dentada</td><td>Gol, Voyage 1.0 8v</td><td>Gates</td><td class="mono">B-11-1</td><td class="num" style="color:var(--danger);font-weight:700">0</td><td class="num">4</td><td class="num">R$ 71,00</td><td class="num">R$ 134,00</td><td>há 3 dias</td><td><span class="tag t-danger">Ruptura</span></td></tr>
+          <tr><td class="mono">DF-4471</td><td>Disco de freio ventilado</td><td>Onix, Cobalt</td><td>Hipper Freios</td><td class="mono">A-04-1</td><td class="num">12</td><td class="num">6</td><td class="num">R$ 98,00</td><td class="num">R$ 189,00</td><td>hoje</td><td><span class="tag t-ok">Normal</span></td></tr>
+          <tr><td class="mono">FO-0055</td><td>Filtro de óleo</td><td>Linha GM 1.0/1.4</td><td>Tecfil</td><td class="mono">C-01-4</td><td class="num">46</td><td class="num">20</td><td class="num">R$ 14,20</td><td class="num">R$ 32,90</td><td>hoje</td><td><span class="tag t-ok">Normal</span></td></tr>
+          <tr><td class="mono">VL-6E</td><td>Vela de ignição BKR6E</td><td>Universal</td><td>NGK</td><td class="mono">C-02-2</td><td class="num" style="color:var(--danger);font-weight:700">0</td><td class="num">20</td><td class="num">R$ 11,90</td><td class="num">R$ 24,90</td><td>ontem</td><td><span class="tag t-danger">Ruptura</span></td></tr>
+          <tr><td class="mono">AM-7710</td><td>Amortecedor traseiro</td><td>Onix 1.0 2017–22</td><td>Cofap</td><td class="mono">D-05-1</td><td class="num">2</td><td class="num">6</td><td class="num">R$ 280,00</td><td class="num">R$ 590,00</td><td>hoje</td><td><span class="tag t-warn">Abaixo do mín.</span></td></tr>
+          <tr><td class="mono">FA-G4E</td><td>Farol lado esquerdo</td><td>Gol G4 2006–13</td><td>Arteb</td><td class="mono">E-09-3</td><td class="num">9</td><td class="num">2</td><td class="num">R$ 185,00</td><td class="num">R$ 349,00</td><td>há 240 dias</td><td><span class="tag t-info">Sem giro</span></td></tr>
+          <tr><td class="mono">FL-0090</td><td>Fluido de freio DOT 4 500ml</td><td>Universal</td><td>Bosch</td><td class="mono">C-07-1</td><td class="num">39</td><td class="num">15</td><td class="num">R$ 13,50</td><td class="num">R$ 29,90</td><td>hoje</td><td><span class="tag t-ok">Normal</span></td></tr>
+          <tr><td class="mono">EB-2231</td><td>Kit embreagem</td><td>HB20 1.0 2013–19</td><td>LuK</td><td class="mono">D-02-2</td><td class="num">5</td><td class="num">3</td><td class="num">R$ 410,00</td><td class="num">R$ 799,00</td><td>há 6 dias</td><td><span class="tag t-ok">Normal</span></td></tr>
+          <tr><td class="mono">BB-0321</td><td>Bomba d'água</td><td>Palio, Uno Fire</td><td>Urba</td><td class="mono">B-04-2</td><td class="num">7</td><td class="num">4</td><td class="num">R$ 96,00</td><td class="num">R$ 185,00</td><td>há 12 dias</td><td><span class="tag t-ok">Normal</span></td></tr>
+        </table>
+        <div style="display:flex;justify-content:space-between;padding:14px 20px;color:var(--muted)"><span>Mostrando 1–10 de 3.214</span><span>‹ 1 2 3 … 322 ›</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ================= TELA 4 — DETALHE DA PEÇA / MOVIMENTAÇÕES ================= -->
+<div class="label">04 · Detalhe da peça <span>histórico de movimentações (entradas por compra, saídas por venda)</span></div>
+<div class="frame">
+  <aside class="side">
+    <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+    <div class="nav"><i class="ico"></i>Dashboard</div>
+    <div class="nav"><i class="ico"></i>Nova venda</div>
+    <div class="nav active"><i class="ico"></i>Estoque</div>
+    <div class="nav"><i class="ico"></i>Movimentações</div>
+    <div class="nav"><i class="ico"></i>Reposição</div>
+    <div class="nav"><i class="ico"></i>Fornecedores</div>
+    <div class="nav"><i class="ico"></i>Relatórios</div>
+    <div class="foot"><div class="avatar">RG</div><div><div style="color:#fff;font-weight:600">Roberto G.</div><div style="font-size:12px">Gestor</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="top"><span class="crumb">Estoque /</span><h1>Pastilha de freio dianteira · Cobreq</h1><span class="tag t-warn">Abaixo do mínimo</span><div class="spacer"></div><div class="btn">Ajuste de estoque</div><div class="btn">Editar</div></div>
+    <div class="content">
+      <div class="grid4">
+        <div class="card kpi"><div class="l">Saldo atual</div><div class="v">3 un.</div><div class="d muted">Mínimo 8 · Máximo 30</div></div>
+        <div class="card kpi"><div class="l">Vendidas (30 dias)</div><div class="v">21 un.</div><div class="d up">Giro alto · Curva A</div></div>
+        <div class="card kpi"><div class="l">Cobertura estimada</div><div class="v" style="color:var(--warn)">4 dias</div><div class="d muted">pela média de vendas</div></div>
+        <div class="card kpi"><div class="l">Margem</div><div class="v">47,9%</div><div class="d muted">custo méd. R$ 62,40</div></div>
+      </div>
+      <div class="row" style="flex:1;min-height:0">
+        <div class="card" style="flex:1">
+          <h3>Dados da peça</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="field"><label>Código interno</label><div class="input mono">FR-1052</div></div>
+            <div class="field"><label>Código do fabricante</label><div class="input mono">N-1052</div></div>
+            <div class="field"><label>Categoria</label><div class="input">Freios › Pastilhas</div></div>
+            <div class="field"><label>Localização</label><div class="input mono">Corredor A · Prat. 03 · Nível 2</div></div>
+            <div class="field" style="grid-column:span 2"><label>Aplicação (veículos compatíveis)</label><div class="input">Chevrolet Onix 2013–22 · Prisma 2013–19 · Cobalt 1.4</div></div>
+            <div class="field"><label>Fornecedor principal</label><div class="input">Distribuidora Minas Peças</div></div>
+            <div class="field"><label>Prazo de entrega</label><div class="input">3 dias úteis</div></div>
+          </div>
+        </div>
+        <div class="card" style="flex:1.3">
+          <h3>Movimentações <span class="sub">saldo recalculado a cada lançamento</span></h3>
+          <div class="timeline">
+            <div class="tl"><span class="tag t-danger">Saída</span><div style="flex:1"><b>Venda #10482</b> · Oficina Mecânica do Zé<div class="muted">28/09 · 18:41 · Juliana S.</div></div><span class="q down">−1</span><span class="mono" style="width:70px;text-align:right">saldo 3</span></div>
+            <div class="tl"><span class="tag t-danger">Saída</span><div style="flex:1"><b>Venda #10476</b> · Consumidor final<div class="muted">28/09 · 15:10 · Carlos M.</div></div><span class="q down">−2</span><span class="mono" style="width:70px;text-align:right">saldo 4</span></div>
+            <div class="tl"><span class="tag t-danger">Saída</span><div style="flex:1"><b>Venda #10455</b> · Auto Center Savassi<div class="muted">27/09 · 10:02 · Juliana S.</div></div><span class="q down">−4</span><span class="mono" style="width:70px;text-align:right">saldo 6</span></div>
+            <div class="tl"><span class="tag t-info">Ajuste</span><div style="flex:1"><b>Inventário</b> · divergência física<div class="muted">25/09 · 08:30 · Roberto G.</div></div><span class="q down">−1</span><span class="mono" style="width:70px;text-align:right">saldo 10</span></div>
+            <div class="tl"><span class="tag t-ok">Entrada</span><div style="flex:1"><b>NF-e 45.221</b> · Distribuidora Minas Peças<div class="muted">20/09 · 14:15 · Roberto G.</div></div><span class="q up">+10</span><span class="mono" style="width:70px;text-align:right">saldo 11</span></div>
+            <div class="tl" style="border-bottom:0"><span class="tag t-danger">Saída</span><div style="flex:1"><b>Venda #10390</b> · Oficina Irmãos Reis<div class="muted">19/09 · 16:48 · Carlos M.</div></div><span class="q down">−3</span><span class="mono" style="width:70px;text-align:right">saldo 1</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ================= TELA 5 — REPOSIÇÃO ================= -->
+<div class="label">05 · Reposição <span>sugestão de compra para evitar ruptura e reduzir excesso</span></div>
+<div class="frame">
+  <aside class="side">
+    <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+    <div class="nav"><i class="ico"></i>Dashboard</div>
+    <div class="nav"><i class="ico"></i>Nova venda</div>
+    <div class="nav"><i class="ico"></i>Estoque</div>
+    <div class="nav"><i class="ico"></i>Movimentações</div>
+    <div class="nav active"><i class="ico"></i>Reposição</div>
+    <div class="nav"><i class="ico"></i>Fornecedores</div>
+    <div class="nav"><i class="ico"></i>Relatórios</div>
+    <div class="foot"><div class="avatar">RG</div><div><div style="color:#fff;font-weight:600">Roberto G.</div><div style="font-size:12px">Gestor</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="top"><h1>Reposição</h1><span class="crumb">calculado a partir das vendas dos últimos 90 dias</span><div class="spacer"></div><div class="btn">Exportar</div><div class="btn primary">Gerar pedido de compra (6 itens)</div></div>
+    <div class="content">
+      <div class="banner">✓ 38 itens abaixo do mínimo encontrados. A lista considera giro, prazo do fornecedor e estoque máximo.</div>
+      <div class="row" style="flex:1;min-height:0">
+        <div class="card" style="flex:2.8;padding:0;overflow:hidden">
+          <div style="padding:20px 20px 6px"><h3>Sugestão de compra <span class="sub">Fornecedor: todos ▾</span></h3></div>
+          <table>
+            <tr><th></th><th>Peça</th><th>Curva</th><th>Nível do estoque</th><th class="num">Saldo</th><th class="num">Média/mês</th><th class="num">Sugerido</th><th>Fornecedor</th><th class="num">Custo</th></tr>
+            <tr><td><span class="check on"></span></td><td><b>Correia dentada Gates</b><div class="muted mono">CD-5463</div></td><td><span class="tag t-blue">A</span></td><td><div class="progress"><i style="width:2%;background:var(--danger)"></i></div></td><td class="num">0</td><td class="num">9</td><td class="num"><b>12</b></td><td>Minas Peças</td><td class="num">R$ 852,00</td></tr>
+            <tr><td><span class="check on"></span></td><td><b>Vela NGK BKR6E</b><div class="muted mono">VL-6E</div></td><td><span class="tag t-blue">A</span></td><td><div class="progress"><i style="width:2%;background:var(--danger)"></i></div></td><td class="num">0</td><td class="num">48</td><td class="num"><b>60</b></td><td>NGK Distrib.</td><td class="num">R$ 714,00</td></tr>
+            <tr><td><span class="check on"></span></td><td><b>Pastilha dianteira Cobreq</b><div class="muted mono">FR-1052</div></td><td><span class="tag t-blue">A</span></td><td><div class="progress"><i style="width:10%;background:var(--warn)"></i></div></td><td class="num">3</td><td class="num">21</td><td class="num"><b>27</b></td><td>Minas Peças</td><td class="num">R$ 1.684,80</td></tr>
+            <tr><td><span class="check on"></span></td><td><b>Amortecedor tras. Onix</b><div class="muted mono">AM-7710</div></td><td><span class="tag t-blue">B</span></td><td><div class="progress"><i style="width:15%;background:var(--warn)"></i></div></td><td class="num">2</td><td class="num">5</td><td class="num"><b>8</b></td><td>Cofap Direto</td><td class="num">R$ 2.240,00</td></tr>
+            <tr><td><span class="check on"></span></td><td><b>Filtro de ar Onix</b><div class="muted mono">FA-3310</div></td><td><span class="tag t-blue">B</span></td><td><div class="progress"><i style="width:25%;background:var(--warn)"></i></div></td><td class="num">4</td><td class="num">11</td><td class="num"><b>14</b></td><td>Tecfil</td><td class="num">R$ 308,00</td></tr>
+            <tr><td><span class="check on"></span></td><td><b>Lâmpada H4 60/55W</b><div class="muted mono">LP-H4</div></td><td><span class="tag t-blue">C</span></td><td><div class="progress"><i style="width:30%;background:var(--warn)"></i></div></td><td class="num">6</td><td class="num">14</td><td class="num"><b>20</b></td><td>Philips Distrib.</td><td class="num">R$ 290,00</td></tr>
+          </table>
+          <div style="display:flex;justify-content:flex-end;gap:24px;padding:16px 20px;font-weight:600"><span class="muted">6 itens · 141 un.</span><span>Total estimado: R$ 6.088,80</span></div>
+        </div>
+        <div class="card" style="flex:1">
+          <h3>Excesso / sem giro <span class="sub">capital parado</span></h3>
+          <div class="alert"><div style="flex:1"><b>Farol Gol G4 esq.</b><div class="muted">9 un. · 240 dias sem venda</div></div><b>R$ 1.665</b></div>
+          <div class="alert"><div style="flex:1"><b>Retrovisor Corsa Classic</b><div class="muted">6 un. · 310 dias</div></div><b>R$ 1.020</b></div>
+          <div class="alert"><div style="flex:1"><b>Radiador Palio 1.0 96–00</b><div class="muted">3 un. · 198 dias</div></div><b>R$ 870</b></div>
+          <div class="alert"><div style="flex:1"><b>Parachoque Fiesta 2008</b><div class="muted">4 un. · 185 dias</div></div><b>R$ 760</b></div>
+          <div class="card" style="background:var(--info-soft);border-color:#d8cdf7;margin-top:12px;padding:14px">
+            <b style="color:var(--info)">Sugestão</b>
+            <p style="margin-top:6px;line-height:1.5">Bloquear novas compras desses itens e avaliar promoção para oficinas parceiras.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
