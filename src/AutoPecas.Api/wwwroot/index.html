@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoPeças Gestão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="menu">
+      <div class="brand"><div class="logo">AP</div>AutoPeças Gestão</div>
+      <nav>
+        <a class="nav" href="#/dashboard" data-rota="dashboard"><span class="ico" aria-hidden="true">▦</span>Dashboard</a>
+        <a class="nav" href="#/venda" data-rota="venda"><span class="ico" aria-hidden="true">＋</span>Nova venda</a>
+        <a class="nav" href="#/vendas" data-rota="vendas"><span class="ico" aria-hidden="true">≡</span>Vendas e orçamentos</a>
+        <a class="nav" href="#/estoque" data-rota="estoque"><span class="ico" aria-hidden="true">▤</span>Estoque</a>
+        <a class="nav" href="#/movimentacoes" data-rota="movimentacoes"><span class="ico" aria-hidden="true">⇅</span>Movimentações</a>
+        <a class="nav" href="#/reposicao" data-rota="reposicao"><span class="ico" aria-hidden="true">↻</span>Reposição</a>
+      </nav>
+      <div class="foot">
+        <div class="avatar" id="avatar">RG</div>
+        <label class="usuario">
+          <span class="sr-only">Usuário atual</span>
+          <select id="usuario">
+            <option value="Roberto G." data-papel="Gestor">Roberto G.</option>
+            <option value="Juliana S." data-papel="Vendedora">Juliana S.</option>
+            <option value="Carlos M." data-papel="Vendedor">Carlos M.</option>
+          </select>
+          <small id="papel">Gestor</small>
+        </label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <button class="btn icon menu-toggle" id="menu-toggle" aria-label="Abrir menu">☰</button>
+        <div class="titulo">
+          <span class="crumb" id="crumb"></span>
+          <h1 id="titulo">Carregando…</h1>
+        </div>
+        <div class="spacer"></div>
+        <div class="acoes" id="acoes"></div>
+      </header>
+      <section class="content" id="view" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="toasts" id="toasts" role="status"></div>
+  <dialog id="modal"></dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
